@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <meta name="description" content="생일을 축하하는 인터랙티브 케이크 페이지" />
+        <meta name="theme-color" content="#fff4f8" />
+
+        <meta property="og:title" content="Happy Birthday 🎉" />
+        <meta property="og:description" content="케이크를 클릭해 보세요!" />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="ko_KR" />
+
+        <title>Happy Birthday</title>
+
+        <link rel="stylesheet" href="./stylesheet.css"></link>
+        <!-- <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(#fff4f8, hsl(343, 100%, 80%));
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        @font-face {
+            font-family: 'SB 어그로';
+            src: url('./SB 어그로 L.ttf');
+        }
+
+        .stage {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cake {
+            margin-top: 5%;
+            position: relative;
+            font-size: clamp(240px, 15vw, 480px);
+            cursor: pointer;
+            z-index: 2;
+            transform: translateY(5vh);
+        }
+
+        .candle {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        .topping {
+            position: absolute;
+            bottom: 0;
+            font-size: 35px;
+            animation: rise 0.6s ease-out forwards;
+        }
+
+        @keyframes rise {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(-400%);
+                opacity: 1;
+            }
+        }
+
+        .dark {
+            background: black;
+            transition: background 0.8s ease;
+        }
+
+        .name {
+            color: lightskyblue;
+        }
+
+        .hidden-message {
+            font-family: 'SB 어그로', sans-serif;
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(35px, 8vw, 80px);
+            color: hotpink;
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 1;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .hidden-message.show {
+            opacity: 1;
+        }
+
+        .emoji-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-emoji {
+            position: absolute;
+            bottom: -50px;
+            font-size: clamp(40px, 4vw, 80px);
+            animation: floatUp 4s linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-box {
+            background: white;
+            padding: 20px 24px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 260px;
+        }
+
+        .modal-box h3 {
+            margin-bottom: 12px;
+        }
+
+        .modal-box input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 14px;
+            font-size: 16px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 8px;
+            cursor: pointer;
+        }
+        </style> -->
+    </head>
+
+    <body>
+            <div class="stage">
+                <div class="hidden-message"><div class="name">🎉 희림 🎉</div>Happy Birthday!!</div>
+
+                <div class="cake">
+                    🎂
+                    <div class="candle">🔥</div>
+                </div>
+            </div>
+
+            <div class="emoji-container"></div>
+
+        <div class="modal" id="nameModal">
+            <div class="modal-box">
+                <h3>이름 수정</h3>
+                <input type="text" id="nameInput" placeholder="이름 입력" />
+                <div class="modal-buttons">
+                    <button id="saveName">저장</button>
+                    <button id="closeModal">취소</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="./script.js"></script>
+
+        <!-- <script>      
+            const emojis = ["🍰","🧁","🥳","🎈","🎉","🎊","🎁","💐"];
+            const container = document.querySelector(".emoji-container");
+
+            let emojiInterval = null;
+
+            function startEmojiRain() {
+                if (emojiInterval) return;
+
+                emojiInterval = setInterval(() => {
+                    createEmoji();
+                }, 300);
+            }
+
+            function createEmoji() {
+                const emoji = document.createElement("div");
+                emoji.classList.add("floating-emoji");
+                emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+
+                emoji.style.left = Math.random() * 100 + "vw";
+                emoji.style.animationDuration = (3 + Math.random() * 3) + "s";
+
+                container.appendChild(emoji);
+
+                setTimeout(() => {
+                    emoji.remove();
+                }, 6000);
+            }
+
+            function burstEmojis() {
+                for (let i = 0; i < 25; i++) {
+                    setTimeout(createEmoji, i * 150);
+                }
+            }
+
+            const cake = document.querySelector(".cake");
+            const candle = document.querySelector(".candle");
+            const message = document.querySelector(".hidden-message");
+            const stage = document.querySelector(".stage");
+
+            cake.addEventListener("click", () => {
+                const topping = document.createElement("div");
+                topping.classList.add("topping");
+
+                const toppings = ["🍓","🍫","🧁","🍒"];
+                topping.textContent = toppings[Math.floor(Math.random() * toppings.length)];
+
+                const cakeWidth = cake.offsetWidth;
+                topping.style.left = Math.random() * (cakeWidth - 40) + "px";
+
+                cake.appendChild(topping);
+
+                setTimeout(() => topping.remove(), 2000);
+            });
+
+            candle.addEventListener("click", (e) => {
+                burstEmojis();
+
+                e.stopPropagation();
+
+                candle.textContent = ""; 
+                stage.classList.add("dark");
+
+                burstEmojis();
+                startEmojiRain();
+
+                setTimeout(() => {
+                    message.classList.add("show");
+                }, 800);
+            });
+
+            const nameEl = document.querySelector(".name");
+            const modal = document.getElementById("nameModal");
+            const nameInput = document.getElementById("nameInput");
+            const saveBtn = document.getElementById("saveName");
+            const closeBtn = document.getElementById("closeModal");
+
+            nameEl.addEventListener("click", (e) => {
+                e.stopPropagation();
+                modal.classList.add("show");
+                nameInput.value = nameEl.textContent;
+                nameInput.focus();
+            });
+
+            saveBtn.addEventListener("click", () => {
+                const value = nameInput.value.trim();
+                if (value) {
+                    nameEl.textContent = "🎉 "+value+" 🎉";
+                }
+                modal.classList.remove("show");
+            });
+
+            closeBtn.addEventListener("click", () => {
+                modal.classList.remove("show");
+            });
+
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove("show");
+                }
+            });
+
+            nameInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    saveBtn.click();
+                }
+
+                if (e.key === "Escape") {
+                    modal.classList.remove("show");
+                }
+            });
+
+        </script> -->
+    </body>
+</html>
